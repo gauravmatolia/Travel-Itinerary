@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Paradise</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .search-icon {
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* About Us Section */
+        .about-section {
+            position: relative;
+            padding: 80px 0;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('tropical-beach.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .about-box {
+            background-color: rgba(0, 24, 57, 0.8);
+            padding: 40px;
+            border-radius: 5px;
+            max-width: 600px;
+            margin-left: auto;
+        }
+
+        .about-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .about-text {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        /* Features Section */
+        .features {
+            background-color: rgba(0, 24, 57, 0.9);
+            padding: 30px 0;
+            color: white;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .feature {
+            text-align: center;
+            width: 30%;
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 15px;
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .feature-title {
+            color: #ffd700;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .feature-text {
+            font-size: 14px;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 40px 0;
+            background-color: rgba(0, 24, 57, 1);
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .gallery-item {
+            width: 32%;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-box {
+                max-width: 100%;
+            }
+
+            .features-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+
+            .gallery-container {
+                flex-direction: column;
+            }
+
+            .gallery-item {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">Paradise</a>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Tours</a></li>
+                <li><a href="#">Reviews</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Book</a></li>
+            </ul>
+            <div class="search-icon">
+                <i class="fa fa-search"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section (Full width beach image) -->
+    <section class="hero">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80" alt="Tropical beach" class="hero-image">
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about-section">
+        <div class="about-content">
+            <div class="about-box">
+                <h2 class="about-title">About Us</h2>
+                <p class="about-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+                <p class="about-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-container">
+            <!-- Safety Feature -->
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fa fa-shield"></i>
+                </div>
+                <h3 class="feature-title">Safety</h3>
+                <p class="feature-text">Travel Safely with our 10 years of experience</p>
+            </div>
+
+            <!-- Support Feature -->
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fa fa-headset"></i>
+                </div>
+                <h3 class="feature-title">Support</h3>
+                <p class="feature-text">24/7 availability for convenient tour</p>
+            </div>
+
+            <!-- Value Feature -->
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fa fa-dollar-sign"></i>
+                </div>
+                <h3 class="feature-title">Value</h3>
+                <p class="feature-text">Competitive pricing and exclusive deals</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+        <div class="gallery-container">
+            <!-- Gallery Item 1 -->
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1540202404-a2f29016b523?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2566&q=80" alt="Beach sunset" class="gallery-image">
+            </div>
+
+            <!-- Gallery Item 2 -->
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1602002418082-dd4e9237734e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Infinity pool" class="gallery-image">
+            </div>
+
+            <!-- Gallery Item 3 -->
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Beach dining" class="gallery-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</body>
+</html>

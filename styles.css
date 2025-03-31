@@ -8,13 +8,24 @@
     font-family: 'Poppins', sans-serif;
 }
 
-body {
+/* body {
     background: url('/Images/signup_page.jpg') no-repeat center center/cover;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+} */
+body {
+    background: url('/Images/signup_page.jpg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
+
 
 .container {
     position: relative;
@@ -102,4 +113,33 @@ button {
 
 button:hover {
     background: #4a2c22;
+}
+
+
+.container {
+    max-width: 500px; /* Increased width */
+}
+
+.sign-in-form {
+    padding: 30px;
+    width: 100%;
+    font-size: 18px; /* Increased font size */
+}
+
+h2 {
+    font-size: 28px; /* Increased heading size */
+}
+
+label {
+    font-size: 16px; /* Larger label text */
+}
+
+input {
+    padding: 12px;
+    font-size: 16px;
+}
+
+button {
+    padding: 12px;
+    font-size: 18px;
 }

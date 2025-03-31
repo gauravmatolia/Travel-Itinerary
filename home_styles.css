@@ -1,0 +1,80 @@
+body {
+    background: #121B24;
+    color: white;
+    font-family: Inter, sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+}
+.container {
+    width: 1280px;
+    margin: 0 auto;
+    position: relative;
+}
+.hero {
+    width: 100%;
+    height: 832px;
+    background: url('/Images/home_img1.jpg') no-repeat center/cover;
+    position: relative;
+}
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px 0;
+    position: absolute;
+    top: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.navbar a {
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+}
+.hero-text {
+    position: absolute;
+    top: 242px;
+    left: 57px;
+    font-size: 180px;
+    font-weight: 700;
+}
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: #89ADB6;
+    margin: 80px 0;
+}
+.tours {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 100px;
+}
+.tour-card {
+    width: 228px;
+    height: 373px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 15px 5px rgba(255, 255, 255, 0.32);
+}
+.discover-section {
+    display: flex;
+    align-items: center;
+    padding: 50px;
+    background: url('/Images/ROAD_IMAGE.jpeg') no-repeat center/cover;
+    height: 716px;
+}
+.discover-text {
+    font-size: 96px;
+    font-weight: 700;
+    color: #89ADB6;
+    max-width: 600px;
+}
+.footer {
+    width: 100%;
+    height: 53px;
+    background: #121B24;
+    box-shadow: 0px 4px 80px 50px #121B24;
+    position: relative;
+}
