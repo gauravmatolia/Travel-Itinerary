@@ -3,24 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Travel Website</title>
+    <title>Contact Us</title>
     <link rel="stylesheet" href="contactUs_styles.css">
 </head>
 <body>
-    <!-- Navigation Header -->
-    <div class="nav-container">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Tours</a></li>
-            <li><a href="#">Reviews</a></li>
-            <li><a href="#">Contact Us</a></li>
-            <li><a href="#">Profile</a></li>
-            <div class="search-icon">
-                <i class="fas fa-search"></i>
-            </div>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="tours.html">Tours</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="contactus.html">Contact Us</a></li>
+            <li><a href="signin.html">Sign In</a></li>
         </ul>
-    </div>
+        <div class="search-icon"><img src="home_images/search0.svg" alt="search_icon"></div>
+    </nav>
+    <div class="line"></div>
 
     <!-- Contact Container -->
     <div class="contact-container">
@@ -28,110 +26,96 @@
         <div class="contact-info">
             <h2>Contact Information</h2>
             
-            <div class="contact-detail">
-                <div class="contact-icon">
+            <div class="contact-details">
+                <div class="contact-item">
                     <i class="fas fa-phone"></i>
+                    <span>+91 9876543210</span>
                 </div>
-                <div class="contact-text">+91 9876543211</div>
-            </div>
-            
-            <div class="contact-detail">
-                <div class="contact-icon">
+                
+                <div class="contact-item">
                     <i class="fas fa-envelope"></i>
+                    <span>info@yoursite.com</span>
                 </div>
-                <div class="contact-text">demo@gmail.com</div>
-            </div>
-            
-            <div class="contact-detail">
-                <div class="contact-icon">
+                
+                <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
+                    <span>123 St, Anyplace, Anystate, Maharashtra</span>
                 </div>
-                <div class="contact-text">132 SK Housing Society, Jalgaon, Maharashtra</div>
             </div>
-
-            <!-- Circle Decoration -->
-            <div class="circle-decoration"></div>
             
-            <!-- Social Media Links -->
-            <div class="social-media">
-                <a href="#" class="social-icon">
+            <div class="social-icons">
+                <div class="social-icon">
+                    <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="social-icon">
                     <i class="fab fa-twitter"></i>
-                </a>
-                <a href="#" class="social-icon">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="#" class="social-icon">
-                    <i class="fab fa-discord"></i>
-                </a>
+                </div>
+                <div class="social-icon">
+                    <i class="fab fa-linkedin-in"></i>
+                </div>
             </div>
         </div>
         
         <!-- Right Side - Contact Form -->
         <div class="contact-form">
-            <form action="#" method="post">
-                <!-- Name Fields -->
+            <form>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="first-name">First Name</label>
-                        <input type="text" id="first-name" name="first-name" value="Gaurav">
+                        <label for="firstName">FIRST NAME</label>
+                        <input type="text" id="firstName" placeholder="John">
                     </div>
+                    
                     <div class="form-group">
-                        <label for="last-name">Last Name</label>
-                        <input type="text" id="last-name" name="last-name" value="Matolia">
+                        <label for="lastName">LAST NAME</label>
+                        <input type="text" id="lastName" placeholder="Doe">
                     </div>
                 </div>
                 
-                <!-- Contact Fields -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="myemail@gmail.com">
+                        <label for="email">EMAIL</label>
+                        <input type="email" id="email" placeholder="yourname@example.com">
                     </div>
+                    
                     <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" value="+91 9988776633">
+                        <label for="phone">PHONE NUMBER</label>
+                        <input type="tel" id="phone" placeholder="+1 2345 6789">
                     </div>
                 </div>
                 
-                <!-- Subject Selection -->
-                <div class="form-group full-width">
-                    <label>Select Subject?</label>
-                    <div class="subject-options">
-                        <label class="radio-container">General Inquiry
-                            <input type="radio" name="subject" value="general" checked>
-                            <span class="checkmark"></span>
-                        </label>
+                <div class="subject-options">
+                    <label class="subject-label">SELECT SUBJECT?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="generalEnquiry" name="subject" checked>
+                            <label for="generalEnquiry">General Enquiry</label>
+                        </div>
                         
-                        <label class="radio-container">Existing Tours
-                            <input type="radio" name="subject" value="tours">
-                            <span class="checkmark"></span>
-                        </label>
+                        <div class="radio-option">
+                            <input type="radio" id="bookingQuery" name="subject">
+                            <label for="bookingQuery">Booking Query</label>
+                        </div>
                         
-                        <label class="radio-container">Created Itinerary
-                            <input type="radio" name="subject" value="itinerary">
-                            <span class="checkmark"></span>
-                        </label>
+                        <div class="radio-option">
+                            <input type="radio" id="feedbackReview" name="subject">
+                            <label for="feedbackReview">Feedback/Review</label>
+                        </div>
                         
-                        <label class="radio-container">Others
-                            <input type="radio" name="subject" value="others">
-                            <span class="checkmark"></span>
-                        </label>
+                        <div class="radio-option">
+                            <input type="radio" id="others" name="subject">
+                            <label for="others">Others</label>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Message Field -->
-                <div class="form-group full-width">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="3" placeholder="Write your message.."></textarea>
+                <div class="message-group">
+                    <label for="message">MESSAGE</label>
+                    <textarea id="message" placeholder="Write your message..."></textarea>
                 </div>
                 
-                <!-- Submit Button -->
-                <button type="submit" class="send-btn">Send Message</button>
+                <button type="submit" class="submit-btn">Send Message</button>
             </form>
         </div>
     </div>
-
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </body>
 </html>
