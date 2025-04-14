@@ -1,0 +1,248 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #040d14;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* First Division - Hero Section */
+.hero {
+    height: 100vh;
+    width: 100%;
+    background-image: url('../home_images/gateway_of_india.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(to bottom, rgba(4,13,20,0), #040d14);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 15px 30px; */
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+    /* background-color: rgba(0, 0, 0, 0.3); */
+    width: 100%;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0 auto; /* Center the nav links */
+    gap: 3rem;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 100;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.search-icon {
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    padding-right: 5rem;
+}
+
+.line{
+    height: 0.09rem;
+    width: 80%;
+    background-color: white;
+    align-self: center;
+}
+
+.hero-content {
+    padding: 0 50px;
+    margin-top: 15rem;
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-size: 10rem;
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+.tours-section {
+    background-color: #040d14;
+    /* padding: 50px 30px; */
+    position: relative;
+    padding: 8rem;
+}
+
+.section-title {
+    color: white;
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+
+}
+
+.tour-card {
+    flex: 1;
+    min-width: 16rem;
+    max-width: 18rem;
+    height: 30rem;
+    background-color: #0a192f;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+    position: relative;
+}
+
+.card-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.tour-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), /* Outer glow */
+                0 0 10px rgba(255, 255, 255, 0.3); /* Inner glow */
+}
+
+.card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+
+.card-title {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.tours-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to bottom, #040d14, rgba(4,13,20,0));
+    z-index: 1;
+}
+
+/* Third Division - Explore Section */
+.explore-section {
+    height: 100vh;
+    background-image: url('../home_images/jungle_road.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.explore-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(to top, rgba(0,0,0,0), rgba(4,13,20,0.8));
+}
+
+.explore-content {
+    color: white;
+    z-index: 2;
+    padding: 50px;
+    max-width: 500px;
+}
+
+.explore-content h2 {
+    font-size: 8rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+    
+    .nav-links li {
+        margin: 0 8px;
+    }
+    
+    .hero-content {
+        padding: 0 30px;
+        margin-top: 100px;
+    }
+    
+    .hero-content h1 {
+        font-size: 50px;
+    }
+    
+    .tours-section {
+        padding: 40px 20px;
+    }
+    
+    .card-container {
+        justify-content: center;
+    }
+    
+    .tour-card {
+        min-width: 280px;
+    }
+    
+    .explore-content {
+        padding: 30px;
+    }
+    
+    .explore-content h2 {
+        font-size: 36px;
+    }
+}

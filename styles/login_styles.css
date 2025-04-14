@@ -1,0 +1,165 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: url('../Images/signup_page.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    max-width: 500px;
+    min-width: 320px;
+    height: auto;
+}
+
+.login-form {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+h2 {
+    color: #5a362a;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #3e1010;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #4a2c22;
+}
+
+.alternative-login {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.alternative-login p {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.login-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.login-icon {
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border: 1px solid #ddd;
+}
+
+.login-icon:hover {
+    transform: scale(1.1);
+}
+
+.login-icon img {
+    width: 18px;
+    height: 18px;
+}
+
+.signin-link {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 15px;
+    color: #333;
+}
+
+.signin-link a {
+    color: #3e1010;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.signin-link a:hover {
+    color: #5a362a;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 80%;
+    }
+    .login-form {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        min-width: 280px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    input, button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
