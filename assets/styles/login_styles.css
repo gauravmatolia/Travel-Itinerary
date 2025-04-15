@@ -11,7 +11,7 @@
 body {
     background: url('../Images/signup_page.jpg') no-repeat center center fixed;
     background-size: cover;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,35 +23,34 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 40%;
+    width: 90%;
     max-width: 500px;
-    min-width: 320px;
-    height: auto;
+    min-width: 280px;
 }
 
 .login-form {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
-    padding: 40px;
+    padding: clamp(24px, 6vw, 40px);
     border-radius: 15px;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: clamp(12px, 3vw, 20px);
 }
 
 h2 {
     color: #5a362a;
-    font-size: 24px;
+    font-size: clamp(20px, 5vw, 26px);
     margin-bottom: 5px;
 }
 
 label {
     display: block;
     text-align: left;
-    font-size: 16px;
+    font-size: clamp(14px, 3vw, 16px);
     color: #333;
     font-weight: 500;
     margin-bottom: 4px;
@@ -59,18 +58,18 @@ label {
 
 input {
     width: 100%;
-    padding: 12px;
+    padding: clamp(10px, 2.5vw, 12px);
     border: 1px solid #ccc;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: clamp(14px, 3vw, 16px);
 }
 
 button {
     width: 100%;
-    padding: 12px;
+    padding: clamp(10px, 2.5vw, 12px);
     background: #3e1010;
     color: white;
-    font-size: 16px;
+    font-size: clamp(15px, 3.5vw, 17px);
     font-weight: bold;
     border: none;
     border-radius: 8px;
@@ -89,7 +88,7 @@ button:hover {
 }
 
 .alternative-login p {
-    font-size: 14px;
+    font-size: clamp(13px, 2.8vw, 14px);
     color: #333;
     margin-bottom: 10px;
 }
@@ -97,12 +96,12 @@ button:hover {
 .login-icons {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: clamp(10px, 3vw, 15px);
 }
 
 .login-icon {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     background: #fff;
     border-radius: 50%;
     display: flex;
@@ -125,7 +124,7 @@ button:hover {
 .signin-link {
     margin-top: 15px;
     text-align: center;
-    font-size: 15px;
+    font-size: clamp(13px, 2.5vw, 15px);
     color: #333;
 }
 
@@ -141,25 +140,14 @@ button:hover {
     text-decoration: underline;
 }
 
-@media (max-width: 768px) {
-    .container {
-        width: 80%;
-    }
-    .login-form {
-        padding: 30px;
-    }
-}
-
+/* Optional: smoother layout for very small screens */
 @media (max-width: 480px) {
-    .container {
-        width: 95%;
-        min-width: 280px;
+    .login-icon {
+        width: 28px;
+        height: 28px;
     }
-    h2 {
-        font-size: 20px;
-    }
-    input, button {
-        font-size: 14px;
-        padding: 10px;
+    .login-icon img {
+        width: 16px;
+        height: 16px;
     }
 }

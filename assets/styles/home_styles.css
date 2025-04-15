@@ -131,6 +131,7 @@ body {
     position: relative;
 }
 
+
 .card-img {
     height: 100%;
     width: 100%;
@@ -156,6 +157,7 @@ body {
 .card-title {
     font-size: 18px;
     margin-bottom: 5px;
+    color: white;
 }
 
 .tours-section::after {
@@ -205,6 +207,15 @@ body {
     margin-bottom: 20px;
     text-transform: uppercase;
     letter-spacing: -1px;
+}
+
+.tour-card {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.tour-card:hover {
+    transform: translateY(-5px);
 }
 
 /* Responsive design */
