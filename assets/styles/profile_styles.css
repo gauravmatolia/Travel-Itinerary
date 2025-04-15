@@ -1,0 +1,124 @@
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fd8c5a;
+    background-image: linear-gradient(180deg, #fd8c5a 0%, #0f181f 100%);
+    color: white;
+    padding: 20px;
+    height: 100vh;
+  }
+  header{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2rem;
+  }
+  
+  /* Navigation */
+  nav {
+    background-color: transparent;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .nav-links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+  }
+  .nav-links li {
+    cursor: pointer;
+  }
+  .nav-links a{
+    text-decoration: none;
+    color: white;
+  }
+
+  .line{
+    height: 0.09rem;
+    width: 80%;
+    background-color: white;
+    align-self: center;
+}
+  
+  /* Profile */
+  .profile-section {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px;
+  }
+  .profile-pic {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+  .profile-details {
+    max-width: 600px;
+  }
+  .profile-details h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .profile-details p {
+    font-size: 14px;
+    color: #dddddd;
+  }
+  
+  /* Bottom Section */
+  .bottom-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    gap: 20px;
+  }
+  .card {
+    background-color: #2e2e2e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%;
+  }
+  .card h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #ffcc99;
+  }
+  .fav-places ol {
+    list-style: decimal inside;
+  }
+  .fav-places li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  
+  /* Trips */
+  .trip {
+    margin-bottom: 15px;
+    background-color: #444;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  /* Memories */
+  .memory-group {
+    margin-bottom: 15px;
+  }
+  .memory-images {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+  }
+  .memory-images img {
+    border-radius: 8px;
+    width: 60px;
+    height: 60px;
+  }
+  

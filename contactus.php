@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li><a href="index.html">Home</a></li>
             <li><a href="tours.html">Tours</a></li>
             <li><a href="aboutus.html">About Us</a></li>
-            <li><a href="contactus.html">Contact Us</a></li>
+            <li><a href="contactus.php">Contact Us</a></li>
             <li><a href="signin.html">Sign In</a></li>
         </ul>
         <div class="search-icon"><img src="home_images/search0.svg" alt="search_icon"></div>
@@ -75,12 +75,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
-                    <span>info@yoursite.com</span>
+                    <span>travelgo@gmail.com</span>
                 </div>
                 
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>123 St, Anyplace, Anystate, Maharashtra</span>
+                    <span>123 Royal Tower, Powai, Maharashtra</span>
                 </div>
             </div>
             
@@ -103,22 +103,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-row">
                     <div class="form-group">
                         <label for="firstName">FIRST NAME</label>
-                        <input type="text" id="firstName" name="firstName" placeholder="John" required>
+                        <input type="text" id="firstName" name="firstName" placeholder="Gaurav" required>
                     </div>
                     <div class="form-group">
                         <label for="lastName">LAST NAME</label>
-                        <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+                        <input type="text" id="lastName" name="lastName" placeholder="Zope" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label for="email">EMAIL</label>
-                        <input type="email" id="email" name="email" placeholder="yourname@example.com" required>
+                        <input type="email" id="email" name="email" placeholder="gaurav@example.com" required>
                     </div>
                     <div class="form-group">
                         <label for="phone">PHONE NUMBER</label>
-                        <input type="tel" id="phone" name="phone" placeholder="+1 2345 6789" required>
+                        <input type="tel" id="phone" name="phone" placeholder="+91 2345 6789" required>
                     </div>
                 </div>
 

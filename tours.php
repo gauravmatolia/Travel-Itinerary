@@ -63,22 +63,25 @@ $hasMoreTours = $totalTours > 3;
         <div class="tours" id="tours-container">
             <?php if(count($tours) > 0): ?>
                 <?php foreach($tours as $index => $tour): ?>
-                    <!-- Tour <?php echo $index + 1; ?> -->
                     <div class="tour-card">
-                        <div class="tour-overlay"></div>
-                        <div class="tour-image-container">
-                            <img src="<?php echo htmlspecialchars($tour['image_url']); ?>" alt="<?php echo htmlspecialchars($tour['tour_name']); ?>" class="tour-image">
-                        </div>
-                        <div class="tour-details">
-                            <h2 class="tour-title"><?php echo htmlspecialchars($tour['tour_name']); ?></h2>
-                            <p class="tour-description">
-                                <?php echo htmlspecialchars($tour['tour_description']); ?>
-                            </p>
-                        </div>
-                        <div class="tour-price-book">
-                            <div class="tour-price">₹<?php echo number_format($tour['price'], 2); ?></div>
-                            <button class="book-btn" data-tour-id="<?php echo $tour['tour_id']; ?>">Book</button>
-                        </div>
+                            <div class="tour-overlay"></div>
+                            <div class="tour-image-container">
+                                <img src="<?php echo htmlspecialchars($tour['image_url']); ?>" alt="<?php echo htmlspecialchars($tour['tour_name']); ?>" class="tour-image">
+                            </div>
+                            <div class="tour-details">
+                                <h2 class="tour-title"><?php echo htmlspecialchars($tour['tour_name']); ?></h2>
+                                <p class="tour-description">
+                                    <?php echo htmlspecialchars($tour['tour_description']); ?>
+                                </p>
+                                <br>
+                                <a href="tour_details.php?id=<?php echo $tour['tour_id']; ?>" style="text-decoration: none; color: orange;">
+                                    More Info
+                                </a>
+                            </div>
+                            <div class="tour-price-book">
+                                <div class="tour-price">₹<?php echo number_format($tour['price'], 2); ?></div>
+                                <button class="book-btn" data-tour-id="<?php echo $tour['tour_id']; ?>">Book</button>
+                            </div>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -147,6 +150,9 @@ $hasMoreTours = $totalTours > 3;
                                 <div class="tour-details">
                                     <h2 class="tour-title">${tour.tour_name}</h2>
                                     <p class="tour-description">${tour.tour_description}</p>
+                                    <a href="tour_details.php?id=${tour.tour_id}" style="text-decoration: none; color: orange;">
+                                        More Info
+                                    </a>
                                 </div>
                                 <div class="tour-price-book">
                                     <div class="tour-price">₹${parseFloat(tour.price).toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
