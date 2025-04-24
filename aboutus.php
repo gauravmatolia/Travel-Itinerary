@@ -10,17 +10,7 @@
     <!-- Navigation Header -->
     
     <div class="hero" style="background-image:url('assets/Images/aboutUs_background.jpg'); display:flex; flex-direction:column;">
-        <nav class="navbar">
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="tours.php">Tours</a></li>
-                <li><a href="aboutus.html">About Us</a></li>
-                <li><a href="contactus.php">Contact Us</a></li>
-                <li><a href="signin.html">Sign In</a></li>
-            </ul>
-            <div class="search-icon"><img src="assets/home_images/search0.svg" alt="search_icon"></div>
-        </nav>
-        <div class="line"></div>
+        <?php include('navbar.php'); ?>
     </div>
 
     <!-- About Us Section -->
@@ -29,10 +19,13 @@
             <div class="about-box">
                 <h2 class="about-title">About Us</h2>
                 <p class="about-text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-                <p class="about-text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est.
+                At Travel Itinerary, we believe that every journey should be as memorable as the destination itself. We're here to take the stress out of planning and bring back the joy of travel with expertly curated itineraries tailored just for you.
+
+Founded by a team of passionate travelers and logistics pros, we understand that no two travelers are the same. Whether you're chasing waterfalls in Iceland, exploring the streets of Tokyo, or dreaming of a quiet beach in Bali, our customized itineraries ensure you get the most out of every moment.
+
+From solo travelers and couples to families and corporate groups, we craft each itinerary with care, precision, and insider knowledge to deliver seamless experiences. With Travel Itinerary, you don’t just visit a place—you live it.
+
+Let us plan your next adventure—you just pack your bags.
                 </p>
             </div>
         </div>

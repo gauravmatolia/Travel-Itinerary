@@ -1,4 +1,12 @@
 <?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 $servername = "localhost";
 $username = "root"; 
@@ -6,196 +14,188 @@ $password = "";
 $dbname = "travel_itinerary";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
-
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT tour_id, tour_name, tour_description, price, location, image_url FROM tours WHERE is_featured = TRUE ORDER BY price ASC LIMIT 3";
-$result = $conn->query($sql);
+$searchTerm = isset($_GET['search']) ? trim($_GET['search']) : "";
+$limit = 3;
 
-$tours = [];
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $tours[] = $row;
-    }
+// Modify SQL query to include search if present
+if (!empty($searchTerm)) {
+    $stmt = $conn->prepare("SELECT tour_id, title, description, price, image_url, rating FROM tours WHERE is_public = TRUE AND title LIKE ? ORDER BY price ASC LIMIT ?");
+    $searchPattern = "%" . $searchTerm . "%";
+    $stmt->bind_param("si", $searchPattern, $limit);
+} else {
+    $stmt = $conn->prepare("SELECT tour_id, title, description, price, image_url, rating FROM tours WHERE is_public = TRUE ORDER BY price ASC LIMIT ?");
+    $stmt->bind_param("i", $limit);
 }
 
-$countSql = "SELECT COUNT(*) as total FROM tours WHERE is_featured = TRUE";
-$countResult = $conn->query($countSql);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$tours = [];
+while ($row = $result->fetch_assoc()) {
+    $tours[] = $row;
+}
+
+$stmt->close();
+
+// Count total number of tours matching search
+if (!empty($searchTerm)) {
+    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM tours WHERE is_public = TRUE AND title LIKE ?");
+    $stmt->bind_param("s", $searchPattern);
+} else {
+    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM tours WHERE is_public = TRUE");
+}
+$stmt->execute();
+$countResult = $stmt->get_result();
 $totalTours = $countResult->fetch_assoc()['total'];
-$hasMoreTours = $totalTours > 3;
+$hasMoreTours = $totalTours > $limit;
+
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Tours</title>
+    <title>TravelGo</title>
     <link rel="stylesheet" href="assets/styles/tours_styles.css">
-    <style>
-        
-    </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="tours.php">Tours</a>
-            <a href="aboutus.html">About Us</a>
-            <a href="contactus.php">Contact Us</a>
-            <a href="profile.php">Profile</a>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Search...">
-            <button><img src="assets/home_images/search0.svg" alt="search_icon"></button>
-        </div>
-    </nav>
-    
-    <div class="container">
-        <!-- Tours Section -->
-        <h1>
-            Recommended Tours
-        </h1>
-        
-        <div class="tours" id="tours-container">
-            <?php if(count($tours) > 0): ?>
-                <?php foreach($tours as $index => $tour): ?>
-                    <div class="tour-card">
-                            <div class="tour-overlay"></div>
-                            <div class="tour-image-container">
-                                <img src="<?php echo htmlspecialchars($tour['image_url']); ?>" alt="<?php echo htmlspecialchars($tour['tour_name']); ?>" class="tour-image">
-                            </div>
-                            <div class="tour-details">
-                                <h2 class="tour-title"><?php echo htmlspecialchars($tour['tour_name']); ?></h2>
-                                <p class="tour-description">
-                                    <?php echo htmlspecialchars($tour['tour_description']); ?>
-                                </p>
-                                <br>
-                                <a href="tour_details.php?id=<?php echo $tour['tour_id']; ?>" style="text-decoration: none; color: orange;">
-                                    More Info
-                                </a>
-                            </div>
-                            <div class="tour-price-book">
-                                <div class="tour-price">₹<?php echo number_format($tour['price'], 2); ?></div>
-                                <button class="book-btn" data-tour-id="<?php echo $tour['tour_id']; ?>">Book</button>
-                            </div>
+<?php include('navbar2.php'); ?>
+<br><br><br>
+
+<div class="container">
+    <h1>Recommended Tours</h1>
+
+    <!-- <form method="get" style="margin-bottom: 20px;">
+        <input type="text" name="search" placeholder="Search tours..." value="<?php echo htmlspecialchars($searchTerm); ?>">
+        <button type="submit">Search</button>
+    </form> -->
+
+    <div class="tours" id="tours-container">
+        <?php if (count($tours) > 0): ?>
+            <?php foreach ($tours as $tour): ?>
+                <div class="tour-card">
+                    <div class="tour-overlay"></div>
+                    <div class="tour-image-container">
+                        <img src="<?php echo htmlspecialchars($tour['image_url']); ?>" class="tour-image" alt="<?php echo htmlspecialchars($tour['title']); ?>">
                     </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>No tours available at the moment. Please check back later.</p>
-            <?php endif; ?>
-        </div>
-        
-        <?php if($hasMoreTours): ?>
-        <div class="show-more-container">
-            <button id="show-more-btn" class="show-more-btn" data-offset="3" data-limit="5">Show More</button>
-            <div class="spinner" id="loading-spinner"></div>
-        </div>
+                    <div class="tour-details">
+                        <h2 class="tour-title"><?php echo htmlspecialchars($tour['title']); ?></h2>
+                        <p class="tour-description"><?php echo htmlspecialchars($tour['description']); ?></p>
+                        <br>
+                        <a href="tour_details.php?tour_id=<?php echo $tour['tour_id']; ?>" style="text-decoration: none; color: orange;">More Info</a>
+                    </div>
+                    <div class="tour-price-book">
+                        <div class="tour-price">₹<?php echo number_format($tour['price'], 2); ?></div>
+                        <div class="tour-rating">⭐<?php echo number_format($tour['rating'], 2); ?></div>
+                        <button class="book-btn" data-tour-id="<?php echo $tour['tour_id']; ?>">Book</button>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No tours found.</p>
         <?php endif; ?>
-        
-        <div class="dotted-line"></div>
-        
-        
-        <div class="custom-tour">
-            <img src="assets/Images/Girl_Character.png" alt="Create custom tour" class="custom-tour-image">
-            <div class="custom-tour-content">
-                <h2 class="custom-tour-title">Want more in your tour?</h2>
-                <p>Create your Own Itinerary</p>
-                <a href="#"><button class="custom-tour-btn">Go</button></a>
-            </div>
+    </div>
+
+    <?php if ($hasMoreTours): ?>
+    <div class="show-more-container">
+        <button id="show-more-btn" class="show-more-btn" data-offset="3" data-limit="5" data-search="<?php echo htmlspecialchars($searchTerm); ?>">Show More</button>
+        <div class="spinner" id="loading-spinner"></div>
+    </div>
+    <?php endif; ?>
+
+    <div class="dotted-line"></div>
+
+    <div class="custom-tour">
+        <img src="assets/Images/Girl_Character.png" class="custom-tour-image" alt="Create custom tour">
+        <div class="custom-tour-content">
+            <h2 class="custom-tour-title">Want more in your tour?</h2>
+            <p>Create your Own Itinerary</p>
+            <a href="create_itinerary.php"><button class="custom-tour-btn">Go</button></a>
         </div>
     </div>
-    
-    <script>
-        
-        document.querySelectorAll('.book-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const tourId = this.getAttribute('data-tour-id');
-                window.location.href = `booking.php?tour_id=${tourId}`;
-            });
+</div>
+
+<script>
+    document.querySelectorAll('.book-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const tourId = this.getAttribute('data-tour-id');
+            window.location.href = `booking.php?tour_id=${tourId}`;
         });
-        
-        
-        document.getElementById('show-more-btn').addEventListener('click', function() {
+    });
+
+    const showMoreBtn = document.getElementById('show-more-btn');
+    if (showMoreBtn) {
+        showMoreBtn.addEventListener('click', function () {
             const offset = parseInt(this.getAttribute('data-offset'));
             const limit = parseInt(this.getAttribute('data-limit'));
+            const search = this.getAttribute('data-search');
             const spinner = document.getElementById('loading-spinner');
-            
-            
+
             spinner.style.display = 'block';
             this.style.display = 'none';
-            
-            
-            fetch(`load_more_tours.php?offset=${offset}&limit=${limit}`)
+
+            fetch(`load_more_tours.php?offset=${offset}&limit=${limit}&search=${encodeURIComponent(search)}`)
                 .then(response => response.json())
                 .then(data => {
-                    
                     spinner.style.display = 'none';
-                    
-                    if (data.tours && data.tours.length > 0) {
-                    
-                        const toursContainer = document.getElementById('tours-container');
-                        
+
+                    if (data.tours.length > 0) {
+                        const container = document.getElementById('tours-container');
                         data.tours.forEach(tour => {
                             const tourCard = document.createElement('div');
                             tourCard.className = 'tour-card';
                             tourCard.innerHTML = `
                                 <div class="tour-overlay"></div>
                                 <div class="tour-image-container">
-                                    <img src="${tour.image_url}" alt="${tour.tour_name}" class="tour-image">
+                                    <img src="${tour.image_url}" class="tour-image" alt="${tour.title}">
                                 </div>
                                 <div class="tour-details">
-                                    <h2 class="tour-title">${tour.tour_name}</h2>
-                                    <p class="tour-description">${tour.tour_description}</p>
-                                    <a href="tour_details.php?id=${tour.tour_id}" style="text-decoration: none; color: orange;">
-                                        More Info
-                                    </a>
+                                    <h2 class="tour-title">${tour.title}</h2>
+                                    <p class="tour-description">${tour.description}</p>
+                                    <br>
+                                    <a href="tour_details.php?tour_id=${tour.tour_id}" style="text-decoration: none; color: orange;">More Info</a>
                                 </div>
                                 <div class="tour-price-book">
-                                    <div class="tour-price">₹${parseFloat(tour.price).toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                                    <div class="tour-price">₹${parseFloat(tour.price).toLocaleString('en-IN', {minimumFractionDigits: 2})}</div>
+                                    <div class="tour-rating">⭐${parseFloat(tour.rating).toFixed(2)}</div>
                                     <button class="book-btn" data-tour-id="${tour.tour_id}">Book</button>
-                                </div>
-                            `;
-                            toursContainer.appendChild(tourCard);
+                                </div>`;
+                            container.appendChild(tourCard);
                         });
-                        
-                        
+
                         document.querySelectorAll('.book-btn').forEach(button => {
-                            button.addEventListener('click', function() {
+                            button.addEventListener('click', function () {
                                 const tourId = this.getAttribute('data-tour-id');
                                 window.location.href = `booking.php?tour_id=${tourId}`;
                             });
                         });
-                        
-                        
+
                         const newOffset = offset + data.tours.length;
-                        this.setAttribute('data-offset', newOffset);
-                        
-                        
-                        if (data.hasMore) {
-                            this.style.display = 'block';
+                        showMoreBtn.setAttribute('data-offset', newOffset);
+
+                        if (!data.hasMore) {
+                            showMoreBtn.parentNode.remove();
                         } else {
-                            
-                            this.parentNode.remove();
+                            showMoreBtn.style.display = 'block';
                         }
                     } else {
-                        
-                        this.parentNode.remove();
+                        showMoreBtn.parentNode.remove();
                     }
                 })
                 .catch(error => {
-                    console.error('Error loading more tours:', error);
+                    console.error('Error:', error);
                     spinner.style.display = 'none';
-                    this.style.display = 'block';
+                    showMoreBtn.style.display = 'block';
                 });
         });
-    </script>
+    }
+</script>
 </body>
 </html>
 
-<?php
-$conn->close();
-?>
+<?php $conn->close(); ?>

@@ -1,0 +1,212 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  body {
+    background: url('../Images/Tours_page.jpg') no-repeat center center/cover;
+    color: white;
+    min-height: 100vh;
+  }
+  
+  /* Navbar */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 100px 0 100px;
+    width: 100%;
+    background: transparent;
+  }
+  
+  /* Search Box */
+  .search-box {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    padding: 6px 12px;
+    width: 220px;
+    border: 2px solid transparent; /* <-- initially no visible border */
+    transition: 0.3s ease; /* smooth effect */
+  }
+  
+  /* On hover of the entire search box */
+  .search-box:hover {
+    border: 2px solid #000000; /* or any color you want */
+  }
+  
+  .search-box input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+    background: transparent;
+  }
+  
+  
+  /* Search Icon - Positioned before the placeholder */
+  .search-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+  }
+  
+  .nav-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  /* Search Input */
+  .search-box input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+    background: transparent;
+  }
+  
+  /* Nav Links */
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+  }
+  
+  .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    transition: 0.3s ease;
+  }
+  
+  .nav-links li a:hover {
+    color: #00ffff;
+  }
+  
+  /* Line Below Navbar */
+  .line {
+    height: 1.5px;
+    width: 90vw; /* Use viewport width to stretch across the entire screen */
+    background-color: white;
+    margin: 20px 0 0 0;
+    position: relative; /* Allows us to offset the line */
+    left: 50%;
+    right: 50%;
+    margin-left: -45vw; /* Offset to counteract the padding and center alignment */
+    margin-right: -45vw; /* Offset to counteract the padding and center alignment */
+    align-self: center;
+  }
+  
+  .main-title {
+    padding: 50px 100px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #00ffff;
+    font-size: 50px;
+    margin-bottom: 30px;
+  }
+  
+  .input-box {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 1300px;
+    margin: 0 auto 20px;
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+  }
+  
+  .input-group label {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  
+  .input-group input {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+  }
+  
+  .subtitle {
+    text-align: center;
+    color: #c7fdfc;
+    margin: 50px 0 20px;
+    font-size: 30px;
+    color: #00ffff;
+  }
+  
+  .itinerary-box {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(6px);
+    padding: 30px;
+    border-radius: 15px;
+    margin: 0 auto;
+    max-width: 1300px;
+  }
+  
+  .day {
+    margin-bottom: 40px;
+  }
+  
+  .day h2 {
+    font-size: 34px;
+    color: #ffbe9a;
+    margin-bottom: 20px;
+  }
+  
+  .events {
+    list-style: none;
+  }
+  
+  .events li {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 0;
+    color: #c7fffe;
+    font-size: 18px;
+  }
+  
+  .cost-box {
+    margin: 40px auto 0 635px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: rgba(217, 217, 217, 0.2);
+    padding: 20px 40px;
+    border-radius: 12px;
+    display: inline-block;
+  }
+  
+  .price {
+    background-color: #ff8356;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-left: 15px;
+  }
+  
+  .cost-box button {
+    font-size: 25px;
+    font-weight: bold;
+  }
+  
+  .cost-box button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 10px #ff8356;
+  }
