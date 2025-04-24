@@ -1,141 +1,151 @@
--- Creating table tours to store the information of the tours --
+-- 1. Users Table
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    profile_image VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. States Table
+CREATE TABLE states (
+    state_id INT AUTO_INCREMENT PRIMARY KEY,
+    state_name VARCHAR(100) UNIQUE NOT NULL
+);
+
+-- 3. Cities Table
+CREATE TABLE cities (
+    city_id INT AUTO_INCREMENT PRIMARY KEY,
+    city_name VARCHAR(100) NOT NULL,
+    state_id INT NOT NULL,
+    FOREIGN KEY (state_id) REFERENCES states(state_id) ON DELETE CASCADE
+);
+
+-- 4. Travel Locations Table
+CREATE TABLE travel_locations (
+    location_id INT AUTO_INCREMENT PRIMARY KEY,
+    location_name VARCHAR(150) NOT NULL,
+    description TEXT,
+    image_url VARCHAR(255),
+    city_id INT NOT NULL,
+    FOREIGN KEY (city_id) REFERENCES cities(city_id) ON DELETE CASCADE
+);
+
+-- 5. Tours Table
 CREATE TABLE tours (
     tour_id INT AUTO_INCREMENT PRIMARY KEY,
-    tour_name VARCHAR(100) NOT NULL,
-    tour_description TEXT NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    duration_days INT NOT NULL,
-    location VARCHAR(100) NOT NULL,
-    image_url VARCHAR(255) NOT NULL,
-    rating DECIMAL(2, 1),
-    max_group_size INT,
-    difficulty_level ENUM('Easy', 'Moderate', 'Challenging') DEFAULT 'Moderate',
-    includes TEXT,
-    excludes TEXT,
-    departure_dates JSON,
-    is_featured BOOLEAN DEFAULT FALSE,
+    title VARCHAR(150) NOT NULL,
+    description TEXT,
+    created_by INT, -- NULL means admin created
+    city_id INT,
+    state_id INT,
+    start_date DATE,
+    end_date DATE,
+    price DECIMAL(10,2),
+    is_public BOOLEAN DEFAULT TRUE,
+    image_url VARCHAR(255),
+    rating DECIMAL(3,2),
+    FOREIGN KEY (created_by) REFERENCES users(user_id),
+    FOREIGN KEY (city_id) REFERENCES cities(city_id),
+    FOREIGN KEY (state_id) REFERENCES states(state_id)
+);
+
+-- 6. Tour_Locations Table
+CREATE TABLE tour_locations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tour_id INT NOT NULL,
+    location_id INT NOT NULL,
+    day_number INT,
+    time_slot VARCHAR(50),
+    FOREIGN KEY (tour_id) REFERENCES tours(tour_id) ON DELETE CASCADE,
+    FOREIGN KEY (location_id) REFERENCES travel_locations(location_id) ON DELETE CASCADE
+);
+
+-- 7. Itineraries Table
+CREATE TABLE itineraries (
+    itinerary_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    itinerary_name VARCHAR(150),
+    state_id INT,
+    city_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (state_id) REFERENCES states(state_id),
+    FOREIGN KEY (city_id) REFERENCES cities(city_id)
 );
 
--- Insert sample data for the tours --
-INSERT INTO tours (
-    tour_name, 
-    tour_description, 
-    price, 
-    duration_days, 
-    location, 
-    image_url, 
-    rating, 
-    max_group_size, 
-    difficulty_level, 
-    includes, 
-    excludes, 
-    departure_dates, 
-    is_featured
-) VALUES 
-(
-    'Magical Varanasi',
-    'Experience the spiritual essence of India with our Varanasi tour. Witness the mesmerizing Ganga Aarti, explore ancient temples, and immerse yourself in the rich culture of one of the world\'s oldest living cities.',
-    9999.00,
-    5,
-    'Varanasi, Uttar Pradesh',
-    'assets/Images/tours_images/Varanasi_tour.jpg',
-    4.8,
-    15,
-    'Moderate',
-    'Accommodation in 4-star hotels, Daily breakfast and dinner, Airport transfers, Local English-speaking guide, Boat ride on the Ganges',
-    'International flights, Travel insurance, Personal expenses, Camera fees at monuments',
-    '["2025-05-15", "2025-06-20", "2025-07-10", "2025-08-05"]',
-    TRUE
-),
-(
-    'Kerala Backwaters Cruise',
-    'Drift along the serene backwaters of Kerala on a traditional houseboat. Enjoy the lush greenery, observe local village life, and savor authentic Kerala cuisine prepared fresh on board by your private chef.',
-    10999.00,
-    7,
-    'Kerala',
-    'assets/Images/tours_images/Kerala_tour.jpg',
-    4.9,
-    10,
-    'Easy',
-    'Accommodation (3 nights in hotels, 2 nights on houseboat), All meals during houseboat stay, Airport transfers, Ayurvedic massage session, Cultural performance',
-    'International flights, Alcoholic beverages, Personal expenses, Optional activities',
-    '["2025-06-01", "2025-07-15", "2025-08-20", "2025-09-10"]',
-    TRUE
-),
-(
-    'Rajasthan Royal Heritage',
-    'Journey through the land of kings and explore magnificent forts, opulent palaces, and vibrant markets. Experience the royal hospitality, desert safari, and colorful culture that makes Rajasthan a must-visit destination.',
-    11999.00,
-    10,
-    'Rajasthan',
-    'assets/Images/tours_images/Rajasthan_tour.jpg',
-    4.7,
-    20,
-    'Moderate',
-    'Accommodation in heritage hotels, Daily breakfast, Private AC vehicle, Entrance fees to monuments, Camel safari in Jaisalmer, Cultural performances',
-    'International flights, Lunch and dinner (except where mentioned), Camera fees, Personal expenses',
-    '["2025-04-20", "2025-05-10", "2025-10-15", "2025-11-05"]',
-    TRUE
+-- 8. Itinerary_Locations Table
+CREATE TABLE itinerary_locations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    itinerary_id INT NOT NULL,
+    location_id INT NOT NULL,
+    day_number INT,
+    time_slot VARCHAR(50),
+    FOREIGN KEY (itinerary_id) REFERENCES itineraries(itinerary_id) ON DELETE CASCADE,
+    FOREIGN KEY (location_id) REFERENCES travel_locations(location_id) ON DELETE CASCADE
 );
 
-INSERT INTO tours (
-    tour_name, 
-    tour_description, 
-    price, 
-    duration_days, 
-    location, 
-    image_url, 
-    rating, 
-    max_group_size, 
-    difficulty_level, 
-    includes, 
-    excludes, 
-    departure_dates, 
-    is_featured
-) VALUES (
-    'Golden Temple Explorer', 
-    'Experience the spiritual heart of Punjab with a guided tour of Amritsar\'s Golden Temple, Wagah Border ceremony, and explore the rich Punjabi culture through local cuisine and folk performances. Visit the historic Jallianwala Bagh, enjoy traditional Punjabi meals, and shop in the vibrant local markets.', 
-    25000, 
-    5, 
-    'Punjab, India', 
-    '/images/tours/punjab-golden-temple.jpg', 
-    4.8, 
-    15, 
-    'Easy', 
-    'Accommodation in 4-star hotels, Daily breakfast and dinner, AC transportation, English-speaking guide, All entrance fees, Wagah Border ceremony tickets, Cultural show tickets, Airport transfers', 
-    'Flights to and from Amritsar, Lunch, Personal expenses, Travel insurance, Optional activities, Tips and gratuities', 
-    '["2025-05-10", "2025-06-15", "2025-07-20", "2025-08-25", "2025-09-30"]', 
-    TRUE
-),
-(
-    'Leh-Ladakh Adventure', 
-    'An adventurous journey through the breathtaking landscapes of Ladakh featuring Pangong Lake, Nubra Valley, Khardung La Pass, and ancient Buddhist monasteries. Experience the unique culture of this high-altitude desert, visit the magnetic hill, and enjoy the serene beauty of Shanti Stupa. Perfect for adventure enthusiasts and photographers.', 
-    45000, 
-    8, 
-    'Ladakh, India', 
-    'assets/Images/tours_images/ladakh_tour.jpg', 
-    4.9, 
-    12, 
-    'Moderate', 
-    'Accommodation in hotels and camps, All meals during the tour, Oxygen cylinders for emergency, Inner Line Permits, AC/Heated vehicle transport, Experienced high-altitude guide, Monastery entrance fees, Airport transfers, Bottled water daily', 
-    'Flights to and from Leh, Personal expenses, Travel insurance, Alcoholic beverages, Tips and gratuities, Optional activities like river rafting', 
-    '["2025-06-05", "2025-06-25", "2025-07-15", "2025-08-05", "2025-08-25"]', 
-    TRUE
-),
-(
-    'Odisha Cultural Heritage', 
-    'Discover the cultural treasures of Odisha including the Sun Temple at Konark, Jagannath Temple in Puri, the ancient caves of Udayagiri, and experience traditional Odissi dance performances with local artisans. Explore the pristine beaches of Puri, visit the Chilika Lake, and observe the traditional crafts of Pipli and Raghurajpur village.', 
-    30000, 
-    7, 
-    'Odisha, India', 
-    '/images/tours/odisha_tours.jpg', 
-    4.6, 
-    16, 
-    'Easy', 
-    'Accommodation in heritage hotels, Daily breakfast and dinner, AC transportation, English-speaking guide, All entrance fees, Boat ride in Chilika Lake, Odissi dance performance, Craft village tours, Airport transfers', 
-    'Flights to and from Bhubaneswar, Lunch, Personal expenses, Camera fees at some sites, Travel insurance, Tips and gratuities, Optional activities', 
-    '["2025-07-12", "2025-08-16", "2025-09-20", "2025-10-15", "2025-11-10"]', 
-    TRUE
+-- 9. Favorites Table
+CREATE TABLE favorites (
+    fav_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    tour_id INT,
+    location_id INT,
+    added_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (tour_id) REFERENCES tours(tour_id) ON DELETE CASCADE,
+    FOREIGN KEY (location_id) REFERENCES travel_locations(location_id) ON DELETE CASCADE
 );
+
+-- 10. Memories Table
+CREATE TABLE memories (
+    memory_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    image_url VARCHAR(255) NOT NULL,
+    caption TEXT,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- 11. Reviews Table
+CREATE TABLE reviews (
+    review_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    tour_id INT NOT NULL,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
+    comment TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (tour_id) REFERENCES tours(tour_id) ON DELETE CASCADE
+);
+
+-- 12. Bookings Table
+CREATE TABLE bookings (
+  booking_id int(11) NOT NULL AUTO_INCREMENT,
+  user_id int(11) NOT NULL,
+  tour_id int(11) NOT NULL,
+  payment_id int(11) NOT NULL,
+  booking_date timestamp NOT NULL DEFAULT current_timestamp(),
+  status varchar(20) NOT NULL DEFAULT 'confirmed',
+  PRIMARY KEY (booking_id),
+  KEY user_id (user_id),
+  KEY tour_id (tour_id),
+  KEY payment_id (payment_id),
+  CONSTRAINT bookings_ibfk_1 FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+  CONSTRAINT bookings_ibfk_2 FOREIGN KEY (tour_id) REFERENCES tours (tour_id) ON DELETE CASCADE,
+  CONSTRAINT bookings_ibfk_3 FOREIGN KEY (payment_id) REFERENCES payments (payment_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 13. Payment table
+CREATE TABLE payments (
+  payment_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  payment_amount DECIMAL(10,2) NOT NULL,
+  payment_method VARCHAR(20) NOT NULL,        
+  card_details TEXT DEFAULT NULL,             
+  upi_id VARCHAR(255) DEFAULT NULL,
+  payment_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  payment_status VARCHAR(20) NOT NULL DEFAULT 'completed', 
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
