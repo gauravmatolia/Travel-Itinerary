@@ -2,6 +2,9 @@
 // Start the session to access user data
 session_start();
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Check if user is logged in, redirect to login page if not
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -53,20 +56,48 @@ while ($row = $favorites_result->fetch_assoc()) {
 
 // Fetch upcoming trips (tours with start_date in the future)
 // Fetch upcoming trips (booked by the user, with start_date in the future)
-$upcoming_trips_query = "SELECT t.title, t.start_date, t.end_date
-                        FROM bookings b
-                        JOIN tours t ON b.tour_id = t.tour_id
-                        WHERE b.user_id = ? AND t.start_date > CURDATE()
-                        ORDER BY t.start_date ASC
-                        LIMIT 2";
+// $upcoming_trips_query = "SELECT t.title, t.start_date, t.end_date
+//                         FROM bookings b
+//                         JOIN tours t ON b.tour_id = t.tour_id
+//                         WHERE b.user_id = ? AND t.start_date > CURDATE()
+//                         ORDER BY t.start_date ASC
+//                         LIMIT 2";
+// $stmt = $conn->prepare($upcoming_trips_query);
+// $stmt->bind_param("i", $user_id);
+// $stmt->execute();
+// $upcoming_trips_result = $stmt->get_result();
+// $upcoming_trips = [];
+// while ($row = $upcoming_trips_result->fetch_assoc()) {
+//     $upcoming_trips[] = $row;
+// }
+
+// Fetch upcoming trips (tours or itineraries) using the final_bookings view
+$upcoming_trips_query = "
+    SELECT 
+        fb.item_title, 
+        COALESCE(t.start_date, fb.start_date) AS start_date, 
+        COALESCE(t.end_date, fb.end_date) AS end_date,
+        fb.booking_type
+    FROM final_bookings fb
+    LEFT JOIN tours t 
+        ON fb.booking_type = 'tour' COLLATE utf8mb4_unicode_ci AND fb.item_id = t.tour_id
+    WHERE fb.user_id = ? 
+      AND COALESCE(t.start_date, fb.start_date) > CURDATE()
+    ORDER BY start_date ASC
+    LIMIT 2
+";
+
+
 $stmt = $conn->prepare($upcoming_trips_query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $upcoming_trips_result = $stmt->get_result();
 $upcoming_trips = [];
+
 while ($row = $upcoming_trips_result->fetch_assoc()) {
     $upcoming_trips[] = $row;
 }
+
 
 // Fetch user memories grouped by location/caption
 $memories_query = "SELECT image_url, caption
@@ -98,6 +129,49 @@ $conn->close();
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TravelGo - My Profile</title>
   <link rel="stylesheet" href="assets/styles/profile_styles.css"/>
+  <style>.profile-details {
+  max-width: 600px;
+  background-color: rgba(255, 255, 255, 0.05); /* Light transparent box */
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.profile-details:hover {
+  transform: scale(1.02);
+}
+
+.profile-details h2 {
+  font-size: 28px;
+  margin-bottom: 12px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.profile-details p {
+  font-size: 15px;
+  color: #e0e0e0;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.edit-profile-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #fd8c5a;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-profile-btn:hover {
+  background-color: #ffaf7c;
+  transform: translateY(-2px);
+}
+</style>
 </head>
 <body>
   <header>
@@ -124,6 +198,7 @@ $conn->close();
           Member since: <?php echo date('F j, Y', strtotime($user_data['created_at'])); ?>
         </p>
         <a href="edit_profile.php" class="edit-profile-btn">Edit Profile</a>
+        <a href="my_bookings.php" class="edit-profile-btn">My Bookings</a>
       </div>
     </section>
 
@@ -151,7 +226,7 @@ $conn->close();
         <?php if (!empty($upcoming_trips)): ?>
           <?php foreach ($upcoming_trips as $trip): ?>
           <div class="trip">
-            <strong><?php echo htmlspecialchars($trip['title']); ?></strong><br/>
+            <strong><?php echo htmlspecialchars($trip['item_title']); ?></strong><br/>
             Start Date: <?php echo date('d/m/Y', strtotime($trip['start_date'])); ?><br/>
             End Date: <?php echo date('d/m/Y', strtotime($trip['end_date'])); ?>
           </div>

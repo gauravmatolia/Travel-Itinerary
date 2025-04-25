@@ -265,6 +265,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       text-align: center;
       margin: 0;
       font-weight: 500;
+      color: black;
     }
     .location-city {
       font-size: 0.8rem;

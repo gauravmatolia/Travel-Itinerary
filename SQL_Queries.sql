@@ -146,6 +146,69 @@ CREATE TABLE payments (
   card_details TEXT DEFAULT NULL,             
   upi_id VARCHAR(255) DEFAULT NULL,
   payment_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  payment_status VARCHAR(20) NOT NULL DEFAULT 'completed', 
+  payment_status VARCHAR(20) NOT NULL DEFAULT 'completed',
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 14. Itineraries_bookings table
+CREATE TABLE itineraries_bookings (
+  booking_id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  itinerary_id INT NOT NULL,
+  payment_id INT NOT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  booking_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  status VARCHAR(20) NOT NULL DEFAULT 'confirmed',
+  PRIMARY KEY (booking_id),
+  KEY user_id (user_id),
+  KEY itinerary_id (itinerary_id),
+  KEY payment_id (payment_id),
+  CONSTRAINT itineraries_bookings_ibfk_1 FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+  CONSTRAINT itineraries_bookings_ibfk_2 FOREIGN KEY (itinerary_id) REFERENCES itineraries (itinerary_id) ON DELETE CASCADE,
+  CONSTRAINT itineraries_bookings_ibfk_3 FOREIGN KEY (payment_id) REFERENCES payments (payment_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Create final_bookings view that combines tour bookings and itinerary bookings
+CREATE VIEW final_bookings AS
+SELECT 
+    'tour' AS booking_type,
+    b.booking_id,
+    b.user_id,
+    b.tour_id AS item_id,
+    NULL AS itinerary_id,
+    NULL AS start_date,
+    NULL AS end_date,
+    t.title AS item_title,
+    b.payment_id,
+    p.payment_amount,
+    p.payment_method,
+    b.booking_date,
+    b.status
+FROM 
+    bookings b
+JOIN 
+    tours t ON b.tour_id = t.tour_id
+JOIN 
+    payments p ON b.payment_id = p.payment_id
+UNION ALL
+SELECT 
+    'itinerary' AS booking_type,
+    ib.booking_id,
+    ib.user_id,
+    NULL AS tour_id,
+    ib.itinerary_id AS item_id,
+    ib.start_date,
+    ib.end_date,
+    i.title AS item_title,
+    ib.payment_id,
+    p.payment_amount,
+    p.payment_method,
+    ib.booking_date,
+    ib.status
+FROM 
+    itineraries_bookings ib
+JOIN 
+    itineraries i ON ib.itinerary_id = i.itinerary_id
+JOIN 
+    payments p ON ib.payment_id = p.payment_id;
